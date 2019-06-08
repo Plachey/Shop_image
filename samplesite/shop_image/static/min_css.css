@@ -1,0 +1,59 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+#wrap{
+    width: 100%;
+    height: auto;
+}
+
+footer, hr{
+    position: fixed; /* Фиксированное положение */
+    right: 0; bottom: 0;
+    width: 100%;
+}
+
+#top{
+    height: 50px;
+    width: 100%;
+    background: #ffaf9a;
+}
+
+#top, p{
+    padding: 0;
+
+}
+
+#right{
+    display: block;
+    width: 85%;
+    height: auto;
+    background: #e6fbf9;
+    margin: 0 0 0 auto;
+}
+
+.right_img{
+    display: block;
+    float: left;
+    padding: 20px 10px 0px 34px;
+    height: auto;
+    width: 225px;
+}
+
+#left{
+    display: block;
+    width: 15%;
+    height: 500px;
+    background: #ddffa3;
+    float: left;
+    border-right: 2px solid #000000;
+}
+
+.right_img h2{
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    font-size: 20px;
+    text-align: left;
+}
