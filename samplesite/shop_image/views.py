@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, DetailView
 from .models import Image, Order
 from .forms import ImageFilterForm, BuyForm
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
+from django.shortcuts import get_object_or_404
 
 
 class MainPageView(ListView):
@@ -21,16 +22,30 @@ class MainPageView(ListView):
             if form.is_valid():
                 category = form.cleaned_data['filter_category']
                 date = form.cleaned_data['order_date']
-                price = form.cleaned_data['order_price']
-                like = form.cleaned_data['order_like']
                 if category == 'all':
                     args = {'form1': form,
-                            'all_image_list': Image.objects.all().order_by(date, price, like)}
+                            'all_image_list': Image.objects.all().order_by(date)}
                 else:
                     args = {'form1': form,
-                            'all_image_list': Image.objects.filter(category=category).order_by(date, price, like)}
+                            'all_image_list': Image.objects.filter(category=category).order_by(date)}
                 return render(request, 'home.html', args)
         return render(request, 'home.html', {'form1': form})
+
+
+def detail_image(request, pk):
+    try:
+        image_id = Image.objects.get(pk=pk)
+    except Image.DoesNotExist:
+        raise Http404("Book does not exist")
+
+        # book_id=get_object_or_404(Book, pk=pk)
+
+    return render(
+        request,
+        'detail_image.html',
+        context={'image': image_id, }
+    )
+
 
 
 class FormBuy(TemplateView):
