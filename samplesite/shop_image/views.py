@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, TemplateView
 from .models import Image, Comment
 from .forms import ImageFilterForm, BuyForm, CommentForm
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 
 
@@ -44,13 +44,8 @@ def detail_image(request, pk):
             form.save()
             return redirect(detail_image, pk)
     else:
-        #try:
-            #image = Image.objects.get(pk=pk)
-            form = CommentForm()
-        #except Image.DoesNotExist:
-         #   raise Http404("Book does not exist")
+        form = CommentForm()
     return render(request, 'detail_image.html', {'image': image, 'comment': comment, 'form': form})
-
 
 
 class FormBuy(TemplateView):
@@ -109,80 +104,3 @@ class PayCallbackView(View):
         print('callback data', response)
         return HttpResponse()
 '''
-
-
-
-
-# original
-'''
- def get(self, request):
-        form = ImageFilterForm()
-        images = self.model.objects.all()[:20]
-        return render(request, 'home.html', {'form': form, 'all_image_list': images})
-
-    def post(self, request):
-        form = ImageFilterForm(request.POST)
-        if form.is_valid():
-            text = form.cleaned_data['ordering']
-            args = {'form1': form, 'all_image_list': Image.objects.filter(category=text)}
-            return render(request, 'home.html', args)
-        return render(request, 'home.html', {'form': form})
-'''
-
-
-
-"""
- def categor(self, request):
-        form = ImageFilterForm(request.POST)
-        if form.is_valid():
-            text = form.cleaned_data['ordering']
-            args = {'form1': form, 'all_image_list': Image.objects.filter(category=text)}
-            return render(request, 'home.html', args)
-        return render(request, 'home.html', {'form1': form})
-
-    def date(self, request):
-        form = ImageFilterDate(request.POST)
-        if form.is_valid():
-            text = form.cleaned_data['filter_date']
-            args = {'form2': form, 'all_image_list': Image.objects.order_by(text)}
-            return render(request, 'home.html', args)
-        return render(request, 'home.html', {'form2': form})
-
-    def post(self, request):
-        if 'filtr_category' in request.POST:
-            form = ImageFilterForm(request.POST)
-            if form.is_valid():
-                text = form.cleaned_data['ordering']
-                #if text is 'all':
-                #    args = {'form': form, 'all_image_list': Image.objects.filter(**Image.CHOISE_CATEGORY)}
-                #else:
-                args = {'form': form, 'all_image_list': Image.objects.filter(category=text)}
-        elif 'filtr_date' in request.POST:
-            form = ImageFilterDate(request.POST)
-            if form.is_valid():
-                text = form.cleaned_data['filter_date']
-                args = {'form': form, 'all_image_list': Image.objects.order_by(text)}
-
-            return render(request, 'home.html', args)
-        return render(request, 'home.html', {'form': form})
-
-'''
-    def post(self, request):
-        form = ImageFilterForm(request.POST)
-        form1 = ImageFilterDate(request.POST)
-        if form.is_valid():
-            if 'filtr_category' in request.POST:
-                text = form.cleaned_data['ordering']
-                #if text is 'all':
-                #    args = {'form': form, 'all_image_list': Image.objects.filter(**Image.CHOISE_CATEGORY)}
-                #else:
-                args = {'form': form, 'all_image_list': Image.objects.filter(category=text)}
-            elif 'filtr_date' in request.POST:
-                text = form1.cleaned_data['filter_date']
-                args = {'form': form1, 'all_image_list': Image.objects.order_by(text)}
-
-            return render(request, 'home.html', args)
-        return render(request, 'home.html', {'form': form})
-'''
-"""
-

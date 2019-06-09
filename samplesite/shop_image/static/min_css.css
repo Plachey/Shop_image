@@ -66,3 +66,21 @@ footer, hr{
     font-size: 20px;
     text-align: left;
 }
+
+.comment{
+    display: block;
+    float: left;
+    padding-left: 110px;
+}
+
+.author{
+    background-color: #769ae2;
+}
+
+.com_user{
+    background-color: #76945454;
+}
+
+.date_user_com{
+    background-color: #21245646;
+}

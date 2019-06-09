@@ -22,11 +22,14 @@ class ImageFilterForm(forms.Form):
         ['-date', 'date old to new'],
         ['date', 'date new to old'],
         ['price', 'price low to high'],
-        ['-price', 'price high to low'],
-        ['like', 'like less to more'],
-        ['-like', 'like more to less']
+        ['-price', 'price high to low']
     ])
 
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['comment']
 
 
 class BuyForm(forms.Form):
@@ -49,9 +52,3 @@ class BuyForm(forms.Form):
             # Выбрасываем ошибку, если пароли не совпали
             raise forms.ValidationError('Пароли должны совпадать!')
         return self.cleaned_data
-
-
-class CommentForm(ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['comment']
