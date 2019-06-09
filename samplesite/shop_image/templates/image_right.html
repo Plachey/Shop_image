@@ -1,6 +1,6 @@
 {% for img in all_image_list %}
     <div class="right_img">
-      <h2><a href="detail_image/image_id">{{img.title}}</a></h2>
+      <h2><a href="{{ img.get_absolute_url }}">{{img.title}}</a></h2>
       <p><img src='{{ img.image.url }}' width="200" height="200"></p>
       <p>category: {{img.category}}</p>
       <p>date: {{img.date}}</p>

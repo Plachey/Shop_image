@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView, TemplateView, DetailView
-from .models import Image, Order
+from django.views.generic import ListView, TemplateView
+from .models import Image
 from .forms import ImageFilterForm, BuyForm
 from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404
@@ -32,19 +32,21 @@ class MainPageView(ListView):
         return render(request, 'home.html', {'form1': form})
 
 
+'''
+from django.urls import reverse
+def image_detail(request, image_id):
+    image = get_object_or_404(Image, id=image_id)
+
+    return reverse('detail_image', kwargs={'image_id': image.id})
+'''
+
 def detail_image(request, pk):
     try:
-        image_id = Image.objects.get(pk=pk)
+        image = Image.objects.get(pk=pk)
     except Image.DoesNotExist:
         raise Http404("Book does not exist")
-
         # book_id=get_object_or_404(Book, pk=pk)
-
-    return render(
-        request,
-        'detail_image.html',
-        context={'image': image_id, }
-    )
+    return render(request, 'detail_image.html', context={'image': image})
 
 
 

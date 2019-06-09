@@ -26,6 +26,9 @@ class Image(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('detail_view', kwargs={'pk': self.pk})
+
 '''
 class User(models.Model):
     first_name = models.CharField(max_length=30, verbose_name='Name')
