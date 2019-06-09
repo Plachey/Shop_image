@@ -1,5 +1,6 @@
 from django import forms
-from .models import Order
+from django.forms import ModelForm
+from .models import Order, Comment
 
 
 class ImageFilterForm(forms.Form):
@@ -39,7 +40,7 @@ class BuyForm(forms.Form):
 
     class Meta:
         model = Order
-        filds = '__all__'
+        fields = '__all__'
 
     # Валидация проходит в этом методе
     def clean(self):
@@ -48,3 +49,9 @@ class BuyForm(forms.Form):
             # Выбрасываем ошибку, если пароли не совпали
             raise forms.ValidationError('Пароли должны совпадать!')
         return self.cleaned_data
+
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['comment']

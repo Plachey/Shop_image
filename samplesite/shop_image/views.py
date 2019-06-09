@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import ListView, TemplateView
-from .models import Image
-from .forms import ImageFilterForm, BuyForm
+from .models import Image, Comment
+from .forms import ImageFilterForm, BuyForm, CommentForm
 from django.http import HttpResponse, Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 
 class MainPageView(ListView):
@@ -32,21 +32,24 @@ class MainPageView(ListView):
         return render(request, 'home.html', {'form1': form})
 
 
-'''
-from django.urls import reverse
-def image_detail(request, image_id):
-    image = get_object_or_404(Image, id=image_id)
-
-    return reverse('detail_image', kwargs={'image_id': image.id})
-'''
-
 def detail_image(request, pk):
-    try:
-        image = Image.objects.get(pk=pk)
-    except Image.DoesNotExist:
-        raise Http404("Book does not exist")
-        # book_id=get_object_or_404(Book, pk=pk)
-    return render(request, 'detail_image.html', context={'image': image})
+    image = get_object_or_404(Image, id=pk)
+    comment = Comment.objects.filter(image=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.author = request.user
+            form.image = image
+            form.save()
+            return redirect(detail_image, pk)
+    else:
+        #try:
+            #image = Image.objects.get(pk=pk)
+            form = CommentForm()
+        #except Image.DoesNotExist:
+         #   raise Http404("Book does not exist")
+    return render(request, 'detail_image.html', {'image': image, 'comment': comment, 'form': form})
 
 
 

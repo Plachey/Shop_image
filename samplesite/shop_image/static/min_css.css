@@ -25,6 +25,15 @@ footer, hr{
 
 }
 
+.log{
+    float: right;
+}
+
+.log p{
+    margin: 0;
+    padding-bottom: 5px;
+}
+
 #right{
     display: block;
     width: 85%;

@@ -11,14 +11,17 @@
 <body>
   <div id="wrap">
     <div id="top">
-      {% if user.is_authenticated %}
-        <p>Hi {{ user.username }}!</p>
-        <a href="{% url 'logout' %}">Log out</a>
-      {% else %}
-        <p>You are not logged in.</p>
-        <a href="{% url 'login' %}">Log In</a>
-        <a href="{% url 'signup' %}">Sign Up</a>
-      {% endif %}
+      <a href="{% url 'home' %}">HOME</a>
+      <div class="log">
+        {% if user.is_authenticated %}
+          <p>Hi {{ user.username }}!</p>
+          <a href="{% url 'logout' %}">Log out</a>
+        {% else %}
+          <p>You are not logged in.</p>
+          <a href="{% url 'login' %}">Log In</a>
+          <a href="{% url 'signup' %}">Sign Up</a>
+        {% endif %}
+       </div>
     </div>
     <div id="left">
       {% include "image_left.html" %}
@@ -29,8 +32,6 @@
     {% block content %}
     {% endblock content %}
 
-    <hr>
-    <footer>&copy; Все права защищены 2018</footer>
   </div>
 </body>
 </html>

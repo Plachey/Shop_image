@@ -19,9 +19,9 @@ class Image(models.Model):
         ('animals', 'Animals')
     ]
     category = models.CharField(max_length=20, choices=CHOISE_CATEGORY, default='common')
-    date = models.DateTimeField(db_index=True, verbose_name='Date and Time')
+    date = models.DateTimeField(verbose_name='Date and Time')
     price = models.FloatField(verbose_name='Price')
-    like = models.IntegerField(default=0, db_index=True, verbose_name='Like')
+    like = models.IntegerField(default=0, verbose_name='Like')
 
     def __str__(self):
         return self.title
@@ -45,9 +45,10 @@ class Order(models.Model):
 
 
 class Comment(models.Model):
-    image = models.ForeignKey(Image, on_delete=models.CASCADE)
-    comment = models.CharField(max_length=140)
-    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='comments')
+    comment = models.TextField(max_length=140)
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Date comment')
 
     def __str__(self):
         return self.comment
