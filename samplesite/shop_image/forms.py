@@ -36,7 +36,7 @@ class BuyForm(forms.Form):
     email = forms.CharField(
         label='Email',
         max_length=100,
-        error_messages={'required': 'Укажите email'})
+        error_messages={'required': 'Enter email'})
     id_image = forms.CharField(label='your image')
     name = forms.CharField(label='name')
     phone = forms.CharField(label='phone')
@@ -45,10 +45,7 @@ class BuyForm(forms.Form):
         model = Order
         fields = '__all__'
 
-    # Валидация проходит в этом методе
     def clean(self):
-        # Определяем правило валидации
         if self.cleaned_data.get('password') != self.cleaned_data.get('password_again'):
-            # Выбрасываем ошибку, если пароли не совпали
-            raise forms.ValidationError('Пароли должны совпадать!')
+            raise forms.ValidationError('Passwords must match!')
         return self.cleaned_data
